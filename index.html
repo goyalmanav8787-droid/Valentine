@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine ❤️</title>
+
+<style>
+body{
+margin:0;
+height:100vh;
+background:linear-gradient(to right,#ff758c,#ff7eb3);
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:sans-serif;
+overflow:hidden;
+}
+
+/* Slides */
+.slide{
+display:none;
+background:white;
+width:380px;
+padding:30px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+z-index:5;
+}
+
+.active{display:block;}
+
+h1{color:#ff4d6d;}
+p{font-size:18px;}
+
+button{
+background:#ff4d6d;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:25px;
+font-size:16px;
+margin:10px;
+cursor:pointer;
+}
+
+#noBtn{background:#aaa;}
+
+/* Hearts */
+.heart{
+position:absolute;
+font-size:20px;
+color:red;
+animation:fall 5s linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+/* Fireworks */
+.firework{
+position:absolute;
+width:6px;
+height:6px;
+background:red;
+border-radius:50%;
+animation:boom 1s forwards;
+}
+@keyframes boom{
+to{
+transform:scale(15);
+opacity:0;
+}
+}
+
+/* Love Letter Popup */
+.popup{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:25px;
+border-radius:20px;
+width:300px;
+box-shadow:0 10px 25px rgba(0,0,0,.4);
+z-index:20;
+}
+
+/* Gift */
+.gift{
+font-size:60px;
+animation:bounce 1s infinite;
+}
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+}
+</style>
+</head>
+
+<body>
+
+<<audio id="bgMusic" loop preload="auto">
+<source src="./love.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SLIDE 1 -->
+<div class="slide active" id="slide1">
+
+<h1>Ayushi 💖</h1>
+
+<p id="typeText"></p>
+
+<h2>Will you be my Valentine? 💌</h2>
+
+<button onclick="goYes()">YES 💘</button>
+<button id="noBtn" onclick="moveNo()">NO 🙈</button>
+<br>
+<button onclick="document.getElementById('bgMusic').play()">
+Play Song 🎵
+</button>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide" id="slide2">
+
+<h1>YAYYY!!! 🎉💖</h1>
+<p>You just made me the happiest person alive!</p>
+
+<div class="gift">🎁</div>
+
+<button onclick="openLetter()">Open Love Letter 💌</button>
+
+</div>
+
+<!-- LOVE LETTER -->
+<div class="popup" id="letter">
+
+<h2>My Love Letter 💖</h2>
+
+<p>
+Ayushi,  
+You are my miracle, my happiness, my forever.  
+Every heartbeat of mine whispers your name.  
+I promise to love you today, tomorrow and always. ❤️
+</p>
+
+<button onclick="closeLetter()">Close</button>
+
+</div>
+
+<script>
+
+/* Start music on first tap */
+document.body.addEventListener("click",()=>{
+document.getElementById("bgMusic").play();
+},{once:true});
+
+/* Typewriter */
+let msg="You are my love, my peace, my life and my everything.";
+let i=0;
+function typeWriter(){
+if(i<msg.length){
+document.getElementById("typeText").innerHTML+=msg.charAt(i);
+i++;
+setTimeout(typeWriter,70);
+}}
+typeWriter();
+
+/* YES */
+function goYes(){
+document.getElementById("slide1").classList.remove("active");
+document.getElementById("slide2").classList.add("active");
+celebrate();
+}
+
+/* NO RUN */
+function moveNo(){
+let b=document.getElementById("noBtn");
+b.style.position="absolute";
+b.style.left=Math.random()*70+"%";
+b.style.top=Math.random()*70+"%";
+}
+
+/* HEARTS */
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
+
+/* FIREWORKS */
+function celebrate(){
+for(let i=0;i<80;i++){
+let f=document.createElement("div");
+f.className="firework";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*100+"vh";
+f.style.background="hsl("+Math.random()*360+",100%,50%)";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1000);
+}
+}
+
+/* LOVE LETTER */
+function openLetter(){
+document.getElementById("letter").style.display="block";
+}
+function closeLetter(){
+document.getElementById("letter").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
